@@ -25,7 +25,7 @@ import java.util.stream.DoubleStream;
 public abstract class AbstractAccuracyTest {
 
     // Accuracy 0.01 = 1 %
-    private static final double DESIRED_ACCURACY_SMALL_SEQUENCE = 0.01;
+    private static final double DESIRED_ACCURACY_SMALL_SEQUENCE = 0.015;
 
     // whe check for this accuracies for our probes
     private static final List<Double> ACCURACIES = Lists.newArrayList(0.005, 0.01, 0.015, 0.02);

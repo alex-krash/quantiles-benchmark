@@ -8,6 +8,6 @@ import com.badoo.quantile.benchmark.bench.Helper;
 public class CombinedBenchTest {
 
     public static void main(String... argv) throws Exception {
-        Helper.run(AirliftBenchTest.class, AlgebirdBenchTest.class, NaiveBenchTest.class, TDunningBenchTest.class);
+        Helper.run(AirliftBenchTest.class, AlgebirdBenchTest.class, NaiveBenchTest.class, TDunningBenchTest.class, HdrBenchTest.class);
     }
 }

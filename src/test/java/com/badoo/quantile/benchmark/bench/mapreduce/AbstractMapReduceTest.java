@@ -27,7 +27,7 @@ import java.util.stream.DoubleStream;
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.MICROSECONDS)
 @Warmup(iterations = 1, time = 1, timeUnit = TimeUnit.SECONDS)
-@Measurement(iterations = 5, time = 1, timeUnit = TimeUnit.SECONDS)
+@Measurement(iterations = 2, time = 1, timeUnit = TimeUnit.SECONDS)
 @Fork(value = 1, jvmArgs = "-XX:+UseG1GC")
 @State(Scope.Benchmark)
 public abstract class AbstractMapReduceTest {

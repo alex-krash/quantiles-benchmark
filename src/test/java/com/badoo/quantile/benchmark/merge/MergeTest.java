@@ -4,6 +4,7 @@ import com.badoo.bi.quantile.QuantileAdapter;
 import com.badoo.bi.quantile.QuantileProducer;
 import com.badoo.quantile.benchmark.helper.AirliftTestHelper;
 import com.badoo.quantile.benchmark.helper.AlgebirdTestHelper;
+import com.badoo.quantile.benchmark.helper.HdrTestHelper;
 import com.badoo.quantile.benchmark.helper.NaiveTestHelper;
 import com.badoo.quantile.benchmark.helper.TDunningTestHelper;
 import com.badoo.quantile.benchmark.helper.TestHelper;
@@ -39,7 +40,8 @@ public class MergeTest {
                 new AirliftTestHelper(),
                 new AlgebirdTestHelper(),
                 new NaiveTestHelper(),
-                new TDunningTestHelper()
+                new TDunningTestHelper(),
+                new HdrTestHelper()
         );
     }
 

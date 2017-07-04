@@ -12,7 +12,7 @@ import com.badoo.quantile.benchmark.bench.raw.TDunningBenchTest;
 public class CombinedSerializationTest {
 
     public static void main(String... argv) throws Exception {
-        Helper.run(AirliftSerializationTest.class, AlgebirdSerializationTest.class, NaiveSerializationTest.class, TDunningSerializationTest.class);
+        Helper.run(AirliftSerializationTest.class, AlgebirdSerializationTest.class, NaiveSerializationTest.class, TDunningSerializationTest.class, HdrSerializationTest.class);
     }
 
 }
