@@ -9,7 +9,7 @@ import java.util.List;
  * Naive implementation, holding all the values in array
  * Created by krash on 15.02.17.
  */
-class NaiveAdapter implements QuantileAdapter {
+public class NaiveAdapter implements QuantileAdapter {
 
     final double[] orderedSequence;
 

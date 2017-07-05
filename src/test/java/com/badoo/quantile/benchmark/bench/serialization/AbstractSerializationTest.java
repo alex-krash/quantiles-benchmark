@@ -4,11 +4,22 @@ import com.badoo.bi.quantile.QuantileAdapter;
 import com.badoo.bi.quantile.QuantileProducer;
 import com.badoo.bi.quantile.airlift.AirliftAdapter;
 import com.badoo.bi.quantile.airlift.AirliftSerializer;
+import com.badoo.bi.quantile.algebird.AlgebirdAdapter;
+import com.badoo.bi.quantile.algebird.AlgebirdQTreeSerializer;
+import com.badoo.bi.quantile.combined.CombinedAdapter;
+import com.badoo.bi.quantile.combined.CombinedSerializer;
+import com.badoo.bi.quantile.hdr.HdrAdapter;
+import com.badoo.bi.quantile.hdr.HdrSerializer;
+import com.badoo.bi.quantile.naive.NaiveAdapter;
+import com.badoo.bi.quantile.naive.NaiveSerializer;
+import com.badoo.bi.quantile.tdunning.TDunningAdapter;
+import com.badoo.bi.quantile.tdunning.TDunningSerializer;
 import com.badoo.quantile.benchmark.bench.Helper;
 import com.badoo.quantile.benchmark.helper.TestHelper;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.ByteBufferOutput;
 import com.esotericsoftware.kryo.io.Output;
+import com.twitter.algebird.QTree;
 import org.apache.spark.util.SizeEstimator;
 import org.junit.Test;
 import org.openjdk.jmh.annotations.AuxCounters;
@@ -35,7 +46,7 @@ import java.util.stream.DoubleStream;
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.MICROSECONDS)
 @Warmup(iterations = 1, time = 1, timeUnit = TimeUnit.SECONDS)
-@Measurement(iterations = 2, time = 500, timeUnit = TimeUnit.MILLISECONDS)
+@Measurement(iterations = 5, time = 500, timeUnit = TimeUnit.MILLISECONDS)
 @Fork(value = 1, jvmArgs = "-XX:+UseG1GC")
 @State(Scope.Benchmark)
 public abstract class AbstractSerializationTest {
@@ -80,14 +91,6 @@ public abstract class AbstractSerializationTest {
         return result.getQuantile(0.75);
     }
 
-    /**
-     * Benchmarks serialization speed
-     */
-    @Benchmark
-    public double benchSpeed(KryoWrapper wrapper) throws Exception {
-        return serialize(wrapper)._2().getQuantile(0.75);
-    }
-
     public Tuple2<Output, QuantileAdapter> serialize(KryoWrapper wrapper) {
         Output output = new ByteBufferOutput(BUFFER_SIZE, BUFFER_SIZE);
         wrapper.kryo.writeObject(output, result);
@@ -104,6 +107,12 @@ public abstract class AbstractSerializationTest {
 
         {
             kryo.register(AirliftAdapter.class, new AirliftSerializer());
+            kryo.register(HdrAdapter.class, new HdrSerializer());
+            kryo.register(TDunningAdapter.class, new TDunningSerializer());
+            kryo.register(QTree.class, new AlgebirdQTreeSerializer());
+            kryo.register(AlgebirdAdapter.class, new AlgebirdQTreeSerializer.AlgebirdAdapterSerializer());
+            kryo.register(NaiveAdapter.class, new NaiveSerializer());
+            kryo.register(CombinedAdapter.class, new CombinedSerializer());
         }
     }
 
